@@ -114,7 +114,9 @@ export const fetchBooks = () => (dispatch) => {
     dispatch(booksLoading(true));
 
     
-    return fetch(baseUrl + 'books')
+    return fetch(baseUrl + 'books',{
+        mode: "no-cors"
+    })
         .then(response => {
             if (response.ok) {
                 return response;
