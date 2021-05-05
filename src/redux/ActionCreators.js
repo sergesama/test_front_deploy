@@ -306,7 +306,6 @@ export const loginUser = (creds) => (dispatch) => {
 
     return fetch(baseUrl + 'users/login', {
         method: 'POST',
-        mode:'no-cors',
         headers: { 
             'Content-Type':'application/json' 
         },
@@ -391,7 +390,6 @@ export const signupUser = (creds) => (dispatch) => {
 
     return fetch(baseUrl + 'users/signup', {
         method: 'POST',
-        mode:'no-cors',
         headers: { 
             'Content-Type':'application/json' 
         },
@@ -419,7 +417,6 @@ export const postFavorite = (bookid) => (dispatch) => {
 
     return fetch(baseUrl + 'favorites/' + bookid, {
         method: "POST",
-        mode:'no-cors',
         body: JSON.stringify({"_id": bookid}),
         headers: {
           "Content-Type": "application/json",
@@ -478,7 +475,6 @@ export const fetchFavorites = () => (dispatch) => {
     const bearer = 'Bearer ' + localStorage.getItem('token');
     return fetch(baseUrl + 'favorites', {
         method: "GET",
-        mode:'no-cors',
         headers: {
             'Authorization': bearer
         },
