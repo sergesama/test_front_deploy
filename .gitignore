@@ -3,9 +3,8 @@
 # dependencies
 /node_modules
 shared
-# testing
-/coverage
-
+/shared
+baseUrl.js
 # production
 /build
 
@@ -19,3 +18,4 @@ shared
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+src/shared/baseUrl.js
