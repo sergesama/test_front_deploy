@@ -593,7 +593,7 @@ export const addCompetences = (competences) => ({
 export const postCompetenceProfile = (competence) => (dispatch) => {
  
     const bearer = 'Bearer ' + localStorage.getItem('token');
-    return fetch(baseUrl + 'competence_profile', {
+    return fetch(baseUrl + 'competence_profiles', {
         method: "POST",
         body: JSON.stringify(competence),
         headers: {
@@ -624,7 +624,7 @@ export const fetchCompetenceProfiles = () => (dispatch) => {
     dispatch(CompetenceProfilesLoading(true));
     
     const bearer = 'Bearer ' + localStorage.getItem('token');
-    return fetch(baseUrl + 'competence_profile', {
+    return fetch(baseUrl + 'competence_profiles', {
         method: "GET",
         headers: {
             'Authorization': bearer
