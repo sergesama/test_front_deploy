@@ -4,16 +4,20 @@ import BookDetail from './BookdetailComponent';
 import AddBook from './AddBookComponent';
 import Favorites from './FavoriteComponent';
 import Header from './HeaderComponent';
+import CreateCompetence from './CreateCompetenceComponent';
+import CreateCompetenceProfile from './CreateCompetenceProfileComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postComment, postFeedback, fetchDishes, fetchBooks, fetchComments, fetchPromos, fetchLeaders, loginUser, signupUser, logoutUser, fetchFavorites, postFavorite, deleteFavorite,postBook } from '../redux/ActionCreators';
+import { postComment, postFeedback, fetchDishes, fetchBooks, fetchCompetences, fetchComments, fetchPromos, loginUser, signupUser, logoutUser, fetchFavorites, postFavorite, deleteFavorite,postBook, postCompetence, postCompetenceProfile } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { compose } from 'redux';
 
 const mapStateToProps = state => {
     return {
       dishes: state.dishes,
       books: state.books,
+      competences: state.competences,
       comments: state.comments,
       promotions: state.promotions,
       leaders: state.leaders,
@@ -25,13 +29,15 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
   postComment: (dishId, rating, comment) => dispatch(postComment(dishId, rating, comment)),
   postBook: (book) => dispatch(postBook(book)),
+  postCompetence: (competence) => dispatch(postCompetence(competence)),
+  postCompetenceProfile: (profile) => dispatch(postCompetenceProfile(profile)),
   fetchDishes: () => {dispatch(fetchDishes())},
   fetchBooks: () => {dispatch(fetchBooks())},
-  resetFeedbackForm: () => { dispatch(actions.reset('feedback'))},
+  fetchCompetences: () => {dispatch(fetchCompetences())},
+  resetCompetenceForm: () => { dispatch(actions.reset('myForms.competence'))},
   resetBookForm: () => { dispatch(actions.reset('book'))},
   fetchComments: () => {dispatch(fetchComments())},
   fetchPromos: () => {dispatch(fetchPromos())},
-  fetchLeaders: () => dispatch(fetchLeaders()),
   postFeedback: (feedback) => dispatch(postFeedback(feedback)),
   loginUser: (creds) => dispatch(loginUser(creds)),
   signupUser: (creds) => dispatch(signupUser(creds)),
@@ -46,14 +52,13 @@ class Main extends Component {
   componentDidMount() {
     this.props.fetchDishes();
     this.props.fetchBooks();
+    this.props.fetchCompetences();
     this.props.fetchComments();
     this.props.fetchPromos();
-    this.props.fetchLeaders();
     this.props.fetchFavorites();
   }
 
   render() {
-   
     const BookWithId = ({match}) => {
       return(
         this.props.auth.isAuthenticated
@@ -86,7 +91,6 @@ class Main extends Component {
             }} />
       )} />
     );
-
     return (
       <div>
         <Header auth={this.props.auth} 
@@ -100,7 +104,8 @@ class Main extends Component {
               <Route exact path="/menu" component={() => <Menu books={this.props.books} />} />
               <Route path="/menu/:bookId" component={BookWithId} />
               <PrivateRoute exact path="/favorites" component={() => <Favorites favorites={this.props.favorites} deleteFavorite={this.props.deleteFavorite} />} />
-              <PrivateRoute exact path="/addbook" component={() => <AddBook resetBookForm={this.props.resetBookForm}  postBook={this.props.postBook} />} />
+              <Route exact path="/create_competence" component={() => <CreateCompetence resetCompetenceForm={this.props.resetCompetenceForm} postCompetence={this.props.postCompetence}  />} />
+              <Route exact path="/create_competence_profile" component={() => <CreateCompetenceProfile  competences={this.props.competences} postCompetenceProfile={this.props.postCompetenceProfile} />} />
 
             </Switch>
           </CSSTransition>

@@ -513,3 +513,153 @@ export const addFavorites = (favorites) => ({
     type: ActionTypes.ADD_FAVORITES,
     payload: favorites
 });
+//////////////////////////////////////////////////////////////////////////////////
+export const postCompetence = (competence) => (dispatch) => {
+ 
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+    return fetch(baseUrl + 'competences', {
+        method: "POST",
+        body: JSON.stringify(competence),
+        headers: {
+            'Authorization': bearer,
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(response => { console.log('Competence', response); alert('Competence successfully Add\n'+JSON.stringify(response)); })
+    .catch(error =>  { console.log('Competence', error.message); alert('Your Competence could not be posted\nError: '+error.message); });
+};
+
+
+export const fetchCompetences = () => (dispatch) => {
+    dispatch(competencesLoading(true));
+    
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+    return fetch(baseUrl + 'competences', {
+        method: "GET",
+        headers: {
+            'Authorization': bearer
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(competences => dispatch(addCompetences(competences)))
+    .catch(error => dispatch(competencesFailed(error.message)));
+}
+
+export const competencesLoading = () => ({
+    type: ActionTypes.COMPETENCES_LOADING
+});
+
+export const competencesFailed = (errmess) => ({
+    type: ActionTypes.COMPETENCES_FAILED,
+    payload: errmess
+});
+
+export const addCompetences = (competences) => ({
+    type: ActionTypes.ADD_COMPETENCES,
+    payload: competences
+});
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+export const postCompetenceProfile = (competence) => (dispatch) => {
+ 
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+    return fetch(baseUrl + 'competence_profile', {
+        method: "POST",
+        body: JSON.stringify(competence),
+        headers: {
+            'Authorization': bearer,
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(response => { console.log('Competence profile', response); alert('Competence profile successfully Add\n'+JSON.stringify(response)); })
+    .catch(error =>  { console.log('Competence profile', error.message); alert('Your Competence profile could not be posted\nError: '+error.message); });
+};
+
+
+export const fetchCompetenceProfiles = () => (dispatch) => {
+    dispatch(CompetenceProfilesLoading(true));
+    
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+    return fetch(baseUrl + 'competence_profile', {
+        method: "GET",
+        headers: {
+            'Authorization': bearer
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(competence_profile => dispatch(addCompetenceProfiles(competence_profile)))
+    .catch(error => dispatch(CompetenceProfilesFailed(error.message)));
+}
+
+export const CompetenceProfilesLoading = () => ({
+    type: ActionTypes.COMPETENCE_PROFILES_LOADING
+});
+
+export const CompetenceProfilesFailed = (errmess) => ({
+    type: ActionTypes.COMPETENCE_PROFILES_FAILED,
+    payload: errmess
+});
+
+export const addCompetenceProfiles = (competence_profile) => ({
+    type: ActionTypes.ADD_COMPETENCE_PROFILES,
+    payload: competence_profile
+});

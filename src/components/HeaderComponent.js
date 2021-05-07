@@ -75,8 +75,13 @@ class Header extends Component {
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="nav-link" to="/addbook">
-                                        <span className="fa fa-plus fa-lg"></span> Add New Book
+                                    <NavLink className="nav-link" to="/create_competence_profile">
+                                        <span className="fa fa-plus fa-lg"></span> Создать профиль компетенций
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" to="/create_competence">
+                                        <span className="fa fa-plus fa-lg"></span> Создать компетенцию
                                     </NavLink>
                                 </NavItem>
                             </Nav>

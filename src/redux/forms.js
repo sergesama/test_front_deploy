@@ -1,19 +1,13 @@
-export const InitialBook = {
-    title: '',
-    creator: '',
-    subject: '',
-    description: '',
-    publisher: '',
-    contributor: '',
-    date: '',
-    type: 'text/html',
-    identifier: '',
-    source: '',
-    language: '',
-    darelationte: '',
-    coverage: 'world',
-    rights: '',
-    audience: 'Инженеры',
-    provenance: '',
-    rightsholder: '',
+export const InitialCompetenceProfile = {
+
+}
+
+export const InitialCompetence = {
+    competence_name: '',
+    indicators:[
+        {
+        indicator_name: '',
+        indicator_procent: ''
+        }
+    ]
 }
