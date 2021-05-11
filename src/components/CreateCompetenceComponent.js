@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Label, Col, Row } from 'reactstrap';
 import { Control, Form, Errors } from 'react-redux-form';
-
 const required = (val) => val && val.length;
 function RenderRawItem({raw_number}) {
         
@@ -10,7 +9,7 @@ function RenderRawItem({raw_number}) {
                 <Col md={1}>{raw_number}</Col>
                 <Col md={4}>
                     <Control.text model={`.indicators[${raw_number}].name`} id={`.indicator_name${raw_number}`} name={`.indicator_name${raw_number}`}
-                        placeholder="Название"
+                        placeholder="Название поля"
                         className="form-control"
                         validators={{
                             required
@@ -27,8 +26,9 @@ function RenderRawItem({raw_number}) {
                 </Col>
                 <Col md={2}>
                     <Control.text model={`.indicators[${raw_number}].procent`} id={`.indicator_procent${raw_number}`} name={`.indicator_procent${raw_number}`}
-                        placeholder="Процент"
+                        placeholder="Вес поля"
                         className="form-control"
+                        value={raw_number}
                         validators={{
                             required
                         }}
@@ -56,10 +56,11 @@ class Create_Competence extends Component {
     constructor(props) {
         super(props);
         this.state={
-            raw_number:0,
-            inputList: []
+            raw_number:2,
+            inputList: [].concat(<RenderRawItem raw_number={0}/> ).concat(<RenderRawItem raw_number={1}/>)
         }
-        
+        this.props.changeForm("myForms.competence.indicators[0].procent","0");
+        this.props.changeForm("myForms.competence.indicators[1].procent","1");
     }
 
     handleSubmit = (values) => {
@@ -67,16 +68,18 @@ class Create_Competence extends Component {
         this.props.postCompetence(values);
         this.props.resetCompetenceForm();
         this.setState({
-            raw_number:0,
-            inputList: []
+            raw_number:2,
+            inputList: [].concat(<RenderRawItem raw_number={0}/> ).concat(<RenderRawItem raw_number={1}/>)
         });
+        this.props.changeForm("myForms.competence.indicators[0].procent","0");
+        this.props.changeForm("myForms.competence.indicators[1].procent","1");
     }
     handleClick = () => {
+        this.props.changeForm("myForms.competence.indicators["+(this.state.raw_number)+"].procent",""+this.state.raw_number);
         this.setState({
             raw_number:this.state.raw_number+1,
             inputList: this.state.inputList.concat(<RenderRawItem raw_number={this.state.raw_number}/> )
         });
-        console.log(this.state.raw_number)
     }
     render() {
         return(

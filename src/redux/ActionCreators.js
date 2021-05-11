@@ -328,7 +328,7 @@ export const loginUser = (creds) => (dispatch) => {
         if (response.success) {
             // If login was successful, set the token in local storage
             localStorage.setItem('token', response.token);
-            console.log(response.token)
+            localStorage.setItem('userId', response.userId);
             localStorage.setItem('creds', JSON.stringify(creds));
             // Dispatch the success action
             dispatch(fetchFavorites());
@@ -528,7 +528,8 @@ export const postCompetence = (competence) => (dispatch) => {
     })
     .then(response => {
         if (response.ok) {
-          return response;
+            dispatch(fetchCompetences())
+            return response;
         } else {
           var error = new Error('Error ' + response.status + ': ' + response.statusText);
           error.response = response;
@@ -604,7 +605,8 @@ export const postCompetenceProfile = (competence) => (dispatch) => {
     })
     .then(response => {
         if (response.ok) {
-          return response;
+            dispatch(fetchCompetenceProfiles())
+            return response;
         } else {
           var error = new Error('Error ' + response.status + ': ' + response.statusText);
           error.response = response;
@@ -663,3 +665,159 @@ export const addCompetenceProfiles = (competence_profile) => ({
     type: ActionTypes.ADD_COMPETENCE_PROFILES,
     payload: competence_profile
 });
+
+///////////////////////////////////////////////////////////////////////////////
+
+export const fetchUsers = () => (dispatch) => {
+    dispatch(UsersLoading(true));
+    
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+    return fetch(baseUrl + 'users', {
+        method: "GET",
+        headers: {
+            'Authorization': bearer
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(users => dispatch(addUsers(users)))
+    .catch(error => dispatch(UsersFailed(error.message)));
+}
+
+export const UsersLoading = () => ({
+    type: ActionTypes.USERS_LOADING
+});
+
+export const UsersFailed = (errmess) => ({
+    type: ActionTypes.USERS_FAILED,
+    payload: errmess
+});
+
+export const addUsers = (user) => ({
+    type: ActionTypes.ADD_USERS,
+    payload: user
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+export const postAssessment = (assessment) => (dispatch) => {
+ 
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+    return fetch(baseUrl + 'assessments', {
+        method: "POST",
+        body: JSON.stringify(assessment),
+        headers: {
+            'Authorization': bearer,
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+            //dispatch(fetchCompetenceProfiles())
+            return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(response => { console.log('Asssessment', response); alert('Asssessment successfully Add\n'+JSON.stringify(response)); })
+    .catch(error =>  { console.log('Asssessment', error.message); alert('Your Asssessment could not be posted\nError: '+error.message); });
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const fetchAsssessmentProfiles = () => (dispatch) => {
+    dispatch(AsssessmentProfilesLoading(true));
+    
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+    return fetch(baseUrl + 'assessment_profiles', {
+        method: "GET",
+        headers: {
+            'Authorization': bearer
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(users => dispatch(addAsssessmentProfiles(users)))
+    .catch(error => dispatch(AsssessmentProfilesFailed(error.message)));
+}
+
+export const AsssessmentProfilesLoading = () => ({
+    type: ActionTypes.ASSESSMENT_PROFILES_LOADING
+});
+
+export const AsssessmentProfilesFailed = (errmess) => ({
+    type: ActionTypes.ASSESSMENT_PROFILES_FAILED,
+    payload: errmess
+});
+
+export const addAsssessmentProfiles = (user) => ({
+    type: ActionTypes.ADD_ASSESSMENT_PROFILES,
+    payload: user
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const postFillAssessmentProfile = (assessment) => (dispatch) => {
+ 
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+    return fetch(baseUrl + 'fillassessmentprofiles', {
+        method: "POST",
+        body: JSON.stringify(assessment),
+        headers: {
+            'Authorization': bearer,
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+            //dispatch(fetchCompetenceProfiles())
+            return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(response => { console.log('FillAssessmentProfile', response); alert('FillAssessmentProfile successfully Add\n'+JSON.stringify(response)); })
+    .catch(error =>  { console.log('FillAssessmentProfile', error.message); alert('Your FillAssessmentProfile could not be posted\nError: '+error.message); });
+};
