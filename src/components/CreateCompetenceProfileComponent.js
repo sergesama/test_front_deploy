@@ -16,7 +16,7 @@ class Create_Competence_Profile extends Component {
     AddCompetence = (competence,raw_number,count) =>{
         this.props.changeForm("myForms.competence_profile.competences["+raw_number+"].weight",100/count)
         var flag=true;
-        this.state.AddedCompetenceList.forEach(comp=>{if(comp.name.indexOf(competence.name)!=-1)flag = false;});
+        this.state.AddedCompetenceList.forEach(comp=>{if(comp.name.indexOf(competence.name)!==-1)flag = false;});
         if (flag) this.setState({AddedCompetenceList:this.state.AddedCompetenceList.concat(competence)})
     }
 

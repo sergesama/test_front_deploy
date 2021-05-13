@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
+import { Navbar, Nav, NavbarToggler, Collapse, NavItem, 
     Button, Modal, ModalHeader, ModalBody,
     Form, FormGroup, Input, Label } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
@@ -59,11 +59,16 @@ class Header extends Component {
     render() {
         return(
             <React.Fragment>
-                <Navbar className="border-bottom" expand="md">
-                    <div className="container">
-                        <NavbarToggler onClick={this.toggleNav} />
+                <Navbar className="border-bottom bg-light" expand="md">
+                    <div className="w-75 mr-5 ml-auto">
+                        <NavbarToggler className="bg-primary" onClick={this.toggleNav} />
                         <Collapse isOpen={this.state.isNavOpen} navbar>
-                            <Nav navbar>
+                            <Nav className="w-100 col-9" navbar>
+                                <NavItem>
+                                    <NavLink className="nav-link" to="/assessments">
+                                        <span className="fa fa-list fa-lg"></span> Мои оценки
+                                    </NavLink>
+                                </NavItem>
                                 <NavItem>
                                     <NavLink className="nav-link" to="/assessment_profile">
                                         <span className="fa fa-list fa-lg"></span> Список анкет оценки
@@ -85,7 +90,7 @@ class Header extends Component {
                                     </NavLink>
                                 </NavItem>
                             </Nav>
-                            <Nav className="ml-auto" navbar>
+                            <Nav className="w-100 col-3 ml-auto" navbar>
                                 <NavItem>
                                     { !this.props.auth.isAuthenticated ?
                                     <div>
@@ -96,12 +101,6 @@ class Header extends Component {
                                                 : null
                                             }
                                         </Button>
-                                        <Button outline onClick={this.toggleModalSignup} className="ml-2"> Signup
-                                        {this.props.auth.isFetching ?
-                                            <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                                            : null
-                                        }
-                                         </Button>
                                     </div>
                                         :
                                         <div>

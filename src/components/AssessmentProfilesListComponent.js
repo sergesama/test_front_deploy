@@ -1,10 +1,9 @@
 import React from 'react';
-import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem,ListGroupItem ,ListGroup,InputGroup,Button,Input,Label,Form} from 'reactstrap';
+import {  CardTitle,ListGroupItem ,ListGroup} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
-import { baseUrl } from '../shared/baseUrl';
 
-    function RenderMenuItem({ assessment_profiles }) {
+    function RenderItem({ assessment_profiles }) {
         return(
             <ListGroupItem>
                 <Link to={`/assessment_profile/${assessment_profiles._id}`} >
@@ -14,12 +13,8 @@ import { baseUrl } from '../shared/baseUrl';
             </ListGroupItem>
         );
     }
-    class Menu extends React.Component {
-        constructor(props) {
-            super(props);
-            
-          }
-        
+    class Assessment_profiles extends React.Component {
+
 
         render() {
         if (this.props.assessment_profiles.isLoading) {
@@ -57,7 +52,7 @@ import { baseUrl } from '../shared/baseUrl';
                     {this.props.assessment_profiles.assessment_profiles.map((assessment_profiles) => {
             
                         return (
-                                <RenderMenuItem assessment_profiles={assessment_profiles} />
+                                <RenderItem assessment_profiles={assessment_profiles} />
                         );
                     })}
                         </ListGroup>
@@ -68,4 +63,4 @@ import { baseUrl } from '../shared/baseUrl';
         }
     }
 
-export default Menu;
+export default Assessment_profiles;

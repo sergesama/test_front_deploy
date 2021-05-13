@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import ModalList from './ModalListComponent';
 import { Form, Control } from 'react-redux-form';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { Button, ListGroup, ListGroupItem } from 'reactstrap';
-import { track, actions,dispatch } from 'react-redux-form';
-import { useDispatch } from 'react-redux'
 
 
 class AssessmentStart extends Component {
@@ -112,7 +109,7 @@ class AssessmentStart extends Component {
         var profiles;
         var evaluated;
         var evaluators;
-        if(this.props.competence_profiles!=undefined)
+        if(this.props.competence_profiles!==undefined)
             profiles = this.props.competence_profiles.competence_profiles.map((profile) => {
                 return(
                     <ListGroupItem className={`h5 col-12 ${this.state.profiledClicked === profile.name && "list-bg-grey"}`}  onClick={this.handleProfiledClassChanged.bind(this, profile)}>{profile.name}</ListGroupItem>
@@ -121,7 +118,7 @@ class AssessmentStart extends Component {
         else
             profiles = <div/>;
         
-        if(this.props.users!=undefined)
+        if(this.props.users!==undefined)
             evaluated = this.props.users.users.map((user) => {
                 return(
                     <ListGroupItem className={`h5 col-12 ${(this.state.evaluatedClicked.find((elem)=>{return elem.username===user.username}) !== undefined) && "list-bg-grey"}`}  onClick={this.handleEvaluatedClassChanged.bind(this, user)}>{user.firstname + " " + user.lastname + " ( " + user.username + " )"}</ListGroupItem>
@@ -130,7 +127,7 @@ class AssessmentStart extends Component {
         else
             evaluated = <div/>;
         
-        if(this.props.users!=undefined)
+        if(this.props.users!==undefined)
             evaluators = this.props.users.users.map((user) => {
                 return(
                     <ListGroupItem className={`h5 col-12 ${ (this.state.evaluatorsClicked.find((elem)=>{return elem===user._id}) !== undefined) && "list-bg-grey"}`}  onClick={this.handleEvaluatorsClassChanged.bind(this, user)}>{user.firstname + " " + user.lastname + " ( " + user.username + " )"}</ListGroupItem>

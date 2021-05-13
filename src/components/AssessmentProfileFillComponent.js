@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Button,ListGroup, ListGroupItem } from 'reactstrap';
-import { Form,Control,Field } from 'react-redux-form';
+import { Form,Control} from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import {  Redirect  } from 'react-router-dom';
 
 function CompetenceRaw ({competence,index}){
     const options =competence.competence_id.indicators.sort((a,b) => b.procent-a.procent).map((indicator)=>{
@@ -33,23 +34,22 @@ function CompetenceRaw ({competence,index}){
 class Assisment_Fill extends Component {
     constructor(props) {
         super(props);
-        
-
-
-        
+        this.state ={
+            referrer:null
+        }
     }
 
     handleSubmit = (values) => {
         console.log("Submit Values "+ JSON.stringify(values));
         this.props.postFillAssessmentProfile(values);
         this.props.resetfilledAssessmentProfileForm();
-        
+        this.setState({referrer: '/assessment_profile'});
         
         
     }
 
     render() {
-
+        if (this.state.referrer) return <Redirect to={this.state.referrer} />;
    
 
         /*
