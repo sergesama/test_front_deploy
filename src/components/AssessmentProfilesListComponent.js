@@ -37,7 +37,6 @@ import { Loading } from './LoadingComponent';
         }
         else
         {
-            console.log(localStorage.getItem('userId'))
             this.props.assessment_profiles.assessment_profiles=this.props.assessment_profiles.assessment_profiles.filter((profiles) => profiles.evaluator._id===localStorage.getItem('userId'))
             return (
                 <div className="container">

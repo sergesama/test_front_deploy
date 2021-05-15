@@ -165,8 +165,8 @@ export const postCompetence = (competence) => (dispatch) => {
             throw error;
       })
     .then(response => response.json())
-    .then(response => { console.log('Competence', response); alert('Competence successfully Add\n'+JSON.stringify(response)); })
-    .catch(error =>  { console.log('Competence', error.message); alert('Your Competence could not be posted\nError: '+error.message); });
+    .then(response =>  console.log('Competence', response))
+    .catch(error =>   console.log('Competence', error.message));
 };
 
 
@@ -242,8 +242,8 @@ export const postCompetenceProfile = (competence) => (dispatch) => {
             throw error;
       })
     .then(response => response.json())
-    .then(response => { console.log('Competence profile', response); alert('Competence profile successfully Add\n'+JSON.stringify(response)); })
-    .catch(error =>  { console.log('Competence profile', error.message); alert('Your Competence profile could not be posted\nError: '+error.message); });
+    .then(response => console.log('Competence profile', response))
+    .catch(error =>  console.log('Competence profile', error.message));
 };
 
 
@@ -366,8 +366,8 @@ export const postAssessment = (assessment) => (dispatch) => {
             throw error;
       })
     .then(response => response.json())
-    .then(response => { console.log('Asssessment', response); alert('Asssessment successfully Add\n'+JSON.stringify(response)); })
-    .catch(error =>  { console.log('Asssessment', error.message); alert('Your Asssessment could not be posted\nError: '+error.message); });
+    .then(response => console.log('Asssessment', response))
+    .catch(error =>  console.log('Asssessment', error.message));
 };
 
 export const fetchAsssessments = () => (dispatch) => {
@@ -488,8 +488,8 @@ export const postFillAssessmentProfile = (assessment) => (dispatch) => {
             throw error;
       })
     .then(response => response.json())
-    .then(response => { console.log('FillAssessmentProfile', response); alert('FillAssessmentProfile successfully Add\n'+JSON.stringify(response)); })
-    .catch(error =>  { console.log('FillAssessmentProfile', error.message); alert('Your FillAssessmentProfile could not be posted\nError: '+error.message); });
+    .then(response => console.log('FillAssessmentProfile', response))
+    .catch(error =>  console.log('FillAssessmentProfile', error.message));
 };
 
 

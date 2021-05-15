@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Button, Label, Col, Row } from 'reactstrap';
+import { Button,  Col, Row } from 'reactstrap';
 import { Control, Form, Errors } from 'react-redux-form';
 const required = (val) => val && val.length;
+const isNumber = (val) => !isNaN(Number(val));
 function RenderRawItem({raw_number}) {
         
         return(
             <Row className="form-group">
-                <Col md={1}>{raw_number}</Col>
-                <Col md={4}>
+                <Col className="text-center pt-2 pb-1" md={1}>{raw_number}</Col>
+                <Col md={5}>
                     <Control.text model={`.indicators[${raw_number}].name`} id={`.indicator_name${raw_number}`} name={`.indicator_name${raw_number}`}
                         placeholder="Название поля"
                         className="form-control"
@@ -20,17 +21,17 @@ function RenderRawItem({raw_number}) {
                         model={`.indicators[${raw_number}].name`}
                         show="touched"
                         messages={{
-                            required: 'Required'
+                            required: 'Название поля не введено'
                         }}
                         />
                 </Col>
                 <Col md={2}>
                     <Control.text model={`.indicators[${raw_number}].procent`} id={`.indicator_procent${raw_number}`} name={`.indicator_procent${raw_number}`}
-                        placeholder="Вес поля"
+                        placeholder="Оценка"
                         className="form-control"
-                        value={raw_number}
                         validators={{
-                            required
+                            required,
+                            isNumber
                         }}
                             />
                     <Errors
@@ -38,13 +39,15 @@ function RenderRawItem({raw_number}) {
                         model={`.indicators[${raw_number}].procent`}
                         show="touched"
                         messages={{
-                            required: 'Required'
+                            required: 'Обязательное поле',
+                            isNumber: 'Должно быть числом'
                         }}
                         />
                 </Col>
-                <Col md={5}>
+                <Col md={4}>
                      <Control.textarea model={`.indicators[${raw_number}].description`} id={`.indicator_description${raw_number}`} name={`.indicator_description${raw_number}`}
                                         rows="1"
+                                        placeholder="Описание"
                                         className="form-control" />
                 </Col>
             </Row>
@@ -64,7 +67,6 @@ class Create_Competence extends Component {
     }
 
     handleSubmit = (values) => {
-        console.log("Current State is: " + JSON.stringify(values));
         this.props.postCompetence(values);
         this.props.resetCompetenceForm();
         this.setState({
@@ -83,18 +85,17 @@ class Create_Competence extends Component {
     }
     render() {
         return(
-            <div className="container">
+            <div className="w-75 container m-auto">
                 <div className="row">
                     <div className="col-12">
                         <h3>Создание компетенции</h3>
                         <hr />
                     </div>
                 </div>
-                <div className="row row-content">
+                <div className="row ">
                     <div className="col-12 col-md-9">
                     <Form model="myForms.competence" onSubmit={(values) => this.handleSubmit(values)}>
-                    <Row className="form-group">
-                    <Label htmlFor="competence_name" md={2}>Название</Label>
+                    <Row className="form-group mb-4">
                     <Col md={4}>
                         <Control.text model=".name" id="competence_name" name="competence_name"
                             placeholder="Название"
@@ -108,7 +109,7 @@ class Create_Competence extends Component {
                             model=".name"
                             show="touched"
                             messages={{
-                                required: 'Required'
+                                required: 'Название компетенции не введено'
                             }}
                             />
                     </Col>
@@ -124,10 +125,15 @@ class Create_Competence extends Component {
                     </Col>
                 </Row>
 
-                
+                <Row className="form-group ">
+                    <Col className="h5 text-center" md={1}>#</Col>
+                    <Col className="h5 text-center" md={5}>Название поля</Col>
+                    <Col className="h5 text-center" md={2}>Оценка</Col>
+                    <Col className="h5 text-center" md={4}>Описание</Col>
+                </Row>
                     {this.state.inputList.map(function(input, index) {
-                    return input   
-                     })}
+                        return input   
+                    })}
                 </Form>
                        
                     </div>

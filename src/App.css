@@ -56,3 +56,40 @@ address{
 .list-bg-grey {
     background-color: #c7c7c7
 }
+*:after, *:before {
+    box-sizing: border-box;
+  }
+  
+.custom-radio {
+    position: absolute;
+    left: -9999px;
+  }
+  .custom-radio:checked + span {
+    background-color: #d6d6e5;
+  }
+  .custom-radio:checked + span:before {
+    box-shadow: inset 0 0 0 0.4375em #00005c;
+  }
+  .custom-span {
+    display: flex;
+    align-items: center;
+    padding: 0.375em 0.75em 0.375em 0.375em;
+    border-radius: 99em;
+    transition: 0.25s ease;
+  }
+  .custom-span:hover {
+    background-color: #d6d6e5;
+  }
+  .custom-span:before {
+    display: flex;
+    flex-shrink: 0;
+    content: "";
+    background-color: #fff;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    margin-right: 0.375em;
+    transition: 0.25s ease;
+    box-shadow: inset 0 0 0 0.125em #00005c;
+  }
+

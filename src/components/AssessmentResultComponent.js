@@ -15,7 +15,7 @@ import { Loading } from './LoadingComponent';
                                     {"Название компетенции: "+comp.comp_id.name}
                                 </div>
                                 <div className="row">
-                                    {"Выбранное значение: "+comp.comp_id.indicators[parseInt(comp.chosenValue)].name + " ("+comp.chosenValue+ ")"}
+                                    {"Выбранное значение: "+comp.comp_id.indicators[comp.chosenValue].name + " ("+comp.chosenValue+ ")"}
                                 </div>
                             </ListGroupItem>
                         );
@@ -42,11 +42,11 @@ import { Loading } from './LoadingComponent';
             var max_score=0;
             var result=0;
             if(this.props.filled_assessment_profiles.length!==0){
-                this.props.filled_assessment_profiles[0].assessmentId.competence_profile.competences.map((competence)=>{
+                this.props.filled_assessment_profiles[0].assessmentId.competence_profile.competences.forEach((competence)=>{
                     max_score+=(competence.competence_id.indicators.length-1)*(competence.weight/100)
                 })
-                this.props.filled_assessment_profiles.map((profile)=>{ 
-                    profile.competences.map((comp)=>{
+                this.props.filled_assessment_profiles.forEach((profile)=>{ 
+                    profile.competences.forEach((comp)=>{
                         result += comp.chosenValue*(comp.weight/100)   
                     })
                 })
@@ -90,7 +90,7 @@ import { Loading } from './LoadingComponent';
                     
                         {this.props.filled_assessment_profiles.map((profile)=>{
                             var cur_score=0;
-                            profile.competences.map((comp)=>{
+                            profile.competences.forEach((comp)=>{
                                 cur_score += comp.chosenValue*(comp.weight/100)   
                             })
                             return(

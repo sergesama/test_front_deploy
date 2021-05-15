@@ -6,7 +6,7 @@ import AssessmentStart from './AssessmentStartComponent';
 import AssessmentProfilesList from './AssessmentProfilesListComponent';
 import AssessmentList from './AssessmentListComponent';
 import AssessmentResult from './AssessmentResultComponent';
-import AssesmentFill from './AssessmentProfileFillComponent';
+import AssessmentProfileFill from './AssessmentProfileFillComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { 
@@ -54,6 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
   resetAssessmentForm: () => { dispatch(actions.reset('myForms.assessment'))},
   resetfilledAssessmentProfileForm: () => { dispatch(actions.reset('myForms.filledAssessmentProfiled'))},
   changeForm: (path,value) => { dispatch(actions.change(path,value))},
+  removeForm: (path,index) => { dispatch(actions.remove(path,index))},
   loginUser: (creds) => dispatch(loginUser(creds)),
   signupUser: (creds) => dispatch(signupUser(creds)),
   logoutUser: () => dispatch(logoutUser()),
@@ -73,7 +74,7 @@ class Main extends Component {
   render() {
     const ProfileWithId = ({match}) => {
       return(
-        <AssesmentFill 
+        <AssessmentProfileFill 
         assessment_profile={this.props.assessment_profiles.assessment_profiles.filter((assessment_profile) => assessment_profile._id === match.params.assessmentProfileId )[0]}
         isLoading={this.props.assessment_profiles.isLoading}
         errMess={this.props.assessment_profiles.errMess}
@@ -121,7 +122,7 @@ class Main extends Component {
               <Route path="/assessment_profile/:assessmentProfileId" component={ProfileWithId} />
               <Route path="/assessments/:assessmentId" component={AssessmentWithId} />
               <Route exact path="/create_competence" component={() => <CreateCompetence resetCompetenceForm={this.props.resetCompetenceForm} postCompetence={this.props.postCompetence} changeForm={this.props.changeForm} />} />
-              <Route exact path="/create_competence_profile" component={() => <CreateCompetenceProfile  competences={this.props.competences} resetCompetenceProfileForm={this.props.resetCompetenceProfileForm} postCompetenceProfile={this.props.postCompetenceProfile} changeForm={this.props.changeForm} />} />
+              <Route exact path="/create_competence_profile" component={() => <CreateCompetenceProfile  competences={this.props.competences} resetCompetenceProfileForm={this.props.resetCompetenceProfileForm} postCompetenceProfile={this.props.postCompetenceProfile} changeForm={this.props.changeForm} removeForm={this.props.removeForm} />} />
               <Route exact path="/assessment_start" component={() => <AssessmentStart  competence_profiles={this.props.competence_profiles} users={this.props.users} postAssessment={this.props.postAssessment} resetAssessmentForm={this.props.resetAssessmentForm} changeAssessmentForm={this.props.changeForm} />} />
 
             </Switch>
