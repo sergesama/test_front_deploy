@@ -38,6 +38,7 @@ import { Loading } from './LoadingComponent';
         else
         {
             this.props.assessments.assessments=this.props.assessments.assessments.filter((profiles) => profiles.evaluators.indexOf(localStorage.getItem('userId'))!==-1)
+            if(this.props.assessments.assessments!==0)
             return (
                 <div className="container">
                     <div className="row">
@@ -58,6 +59,9 @@ import { Loading } from './LoadingComponent';
                     </div>
                 </div>
             );
+            else{
+                return (<div className="container"><div className="row mt-3"><h3>Вы не учавствуете ни в одной оценке</h3></div></div>)
+            }
         }
         }
     }

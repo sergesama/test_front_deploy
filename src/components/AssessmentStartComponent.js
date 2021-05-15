@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Control, Errors } from 'react-redux-form';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { Button, ListGroup, ListGroupItem } from 'reactstrap';
+import {  Redirect  } from 'react-router-dom';
 const required = (val) => val && val.length;
 
 class AssessmentStart extends Component {
@@ -16,7 +17,8 @@ class AssessmentStart extends Component {
             isEvaluatorsModalOpen: false,
             competence_profile: "",
             evaluated: "",
-            evaluators:[]
+            evaluators:[],
+            referrer:null
         }
         this.toggleProfilesModal = this.toggleProfilesModal.bind(this);
         this.toggleEvaluatedModal = this.toggleEvaluatedModal.bind(this);
@@ -43,6 +45,14 @@ class AssessmentStart extends Component {
         });
     }
     
+    handleFailedSubmit(form){
+        var alertString=""
+        if(!form.competence_profile.validity.required) alertString+="Профиль компетенций не выбран.\n"
+        if(!form.evaluated.validity.required) alertString+="Оцениваемый не выбран.\n"
+        if(!form.evaluators.$form.validity.required) alertString+="Оценивающие не выбраны.\n"
+        if(alertString!="") alert("Ошибка Формы.\n"+alertString)
+    }
+
     handleProfiledClassChanged(profile) {
         this.props.changeAssessmentForm('myForms.assessment.competence_profile',profile._id);
         if(this.state.profiledClicked!==profile.name)
@@ -101,9 +111,10 @@ class AssessmentStart extends Component {
             evaluatedClicked:[],
             evaluatorsClicked:[]
         });
-        
+        this.setState({referrer: '/assessment_profile'});
     }
     render(){
+        if (this.state.referrer) return <Redirect to={this.state.referrer} />;
         var profiles;
         var evaluated;
         var evaluators;
@@ -143,7 +154,7 @@ class AssessmentStart extends Component {
                     </div>
                 </div>
                 <div className="row row-content">
-                    <Form className="col-12" model="myForms.assessment"  onSubmit={(values) => this.handleSubmit(values)}>
+                    <Form className="col-12" model="myForms.assessment" onSubmitFailed={(userForm) => this.handleFailedSubmit(userForm)}  onSubmit={(values) => this.handleSubmit(values)}>
                         <div className="row">
                             <Control.text className="col-6 mb-2 form-control" validators={{required}} model=".name" name="name"  placeholder="Название оценки" />
                             <Errors
@@ -161,13 +172,6 @@ class AssessmentStart extends Component {
                                 Добавить оцениваемого
                             </Button>
                             <Control.text className="d-none" validators={{required}} model="myForms.assessment.evaluated"  name="evaluated"/>
-                            <Errors
-                                className="text-danger mt-2 col-12"
-                                model="myForms.assessment.evaluated"
-                                messages={{
-                                    required: 'Оцениваемый не выбран'
-                                }}
-                            />
                         </div>
 
                         <ListGroup className="col-6 ">
@@ -189,13 +193,6 @@ class AssessmentStart extends Component {
                                 Добавить профиль компетенций
                             </Button>
                             <Control.text className="d-none" validators={{required}} model="myForms.assessment.competence_profile"  name="competence_profile"/>
-                            <Errors
-                                className="text-danger mt-2 col-12"
-                                model="myForms.assessment.competence_profile"
-                                messages={{
-                                    required: 'Профиль компетенций не выбран'
-                                }}
-                            />
                         </div>
                         <ListGroup className="col-6 ">
                                {profile}
@@ -205,13 +202,6 @@ class AssessmentStart extends Component {
                                 Добавить оценивающих
                             </Button>
                             <Control.text className="d-none" validators={{required}} model="myForms.assessment.evaluators"  name="evaluators"/>
-                            <Errors
-                                className="text-danger mt-2 col-12"
-                                model="myForms.assessment.evaluators"
-                                messages={{
-                                    required: 'Оценивающие не выбраны'
-                                }}
-                            />
                         </div>
                         <ListGroup className="col-6">
                             {

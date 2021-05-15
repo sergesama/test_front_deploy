@@ -26,7 +26,7 @@ function CompetenceRaw ({competence,switchFunction,type,raw_number}){
                         model={`.competences[${raw_number}].weight`}
                         show="touched"
                         messages={{
-                            required: 'Обязательное поле\n',
+                            required: 'Обязательное поле.\n',
                             weightPositive: 'Вес должен быть больше нуля.\n',
                             isNumber: "Вес должен быть числом."
                         }}

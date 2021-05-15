@@ -57,6 +57,9 @@ class Header extends Component {
     }
 
     render() {
+        console.log(localStorage.getItem('isAdmin')) 
+        console.log(this.props.auth.isAdmin) 
+
         return(
             <React.Fragment>
                 <Navbar className="border-bottom bg-light" expand="md">
@@ -64,33 +67,41 @@ class Header extends Component {
                         <NavbarToggler className="bg-primary" onClick={this.toggleNav} />
                         <Collapse isOpen={this.state.isNavOpen} navbar>
                             <Nav className="w-100 col-9" navbar>
-                                <NavItem>
-                                    <NavLink className="nav-link" to="/assessments">
-                                        <span className="fa fa-list fa-lg"></span> Мои оценки
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className="nav-link" to="/assessment_profile">
-                                        <span className="fa fa-list fa-lg"></span> Список анкет оценки
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className="nav-link" to="/assessment_start">
-                                        <span className="fa fa-plus fa-lg"></span> Начать оценку
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className="nav-link" to="/create_competence_profile">
-                                        <span className="fa fa-plus fa-lg"></span> Создать профиль компетенций
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className="nav-link" to="/create_competence">
-                                        <span className="fa fa-plus fa-lg"></span> Создать компетенцию
-                                    </NavLink>
-                                </NavItem>
+                                <div>
+                                    <NavItem className="d-inline-block">
+                                        <NavLink className="nav-link" to="/assessments">
+                                            <span className="fa fa-list fa-lg"></span> Мои оценки
+                                        </NavLink>
+                                    </NavItem>
+                                    <NavItem className="d-inline-block">
+                                        <NavLink className="nav-link" to="/assessment_profile">
+                                            <span className="fa fa-list fa-lg"></span> Список анкет оценки
+                                        </NavLink>
+                                    </NavItem>
+                                </div>
+                                { this.props.auth.isAdmin ?
+                                    <div>
+                                        <NavItem className="d-inline-block">
+                                            <NavLink className="nav-link" to="/assessment_start">
+                                                <span className="fa fa-plus fa-lg"></span> Начать оценку
+                                            </NavLink>
+                                        </NavItem>
+                                        <NavItem className="d-inline-block">
+                                            <NavLink className="nav-link" to="/create_competence_profile">
+                                                <span className="fa fa-plus fa-lg"></span> Создать профиль компетенций
+                                            </NavLink>
+                                        </NavItem>
+                                        <NavItem className="d-inline-block">
+                                            <NavLink className="nav-link" to="/create_competence">
+                                                <span className="fa fa-plus fa-lg"></span> Создать компетенцию
+                                            </NavLink>
+                                        </NavItem>
+                                    </div>
+                                :
+                                    <div/>
+                                }
                             </Nav>
-                            <Nav className="w-100 col-3 ml-auto" navbar>
+                            <Nav className="w-100 col-3 mr-auto" navbar>
                                 <NavItem>
                                     { !this.props.auth.isAuthenticated ?
                                     <div>

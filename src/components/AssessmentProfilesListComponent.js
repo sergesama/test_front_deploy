@@ -35,9 +35,11 @@ import { Loading } from './LoadingComponent';
                 </div>
             );
         }
-        else
+        else 
         {
+            console.log(this.props.assessment_profiles.assessment_profiles)
             this.props.assessment_profiles.assessment_profiles=this.props.assessment_profiles.assessment_profiles.filter((profiles) => profiles.evaluator._id===localStorage.getItem('userId'))
+            if(this.props.assessment_profiles.assessment_profiles.length!==0)
             return (
                 <div className="container">
                     <div className="row">
@@ -58,7 +60,11 @@ import { Loading } from './LoadingComponent';
                     </div>
                 </div>
             );
+            else{
+                return (<div className="container"><div className="row mt-3"><h3>У вас нет доступных анкет оценки</h3></div></div>)
+            }
         }
+        
         }
     }
 

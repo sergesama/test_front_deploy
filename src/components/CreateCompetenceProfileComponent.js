@@ -56,7 +56,12 @@ class Create_Competence_Profile extends Component {
         });
         
     }
-    
+    handleFailedSubmit(form){
+        var alertString=""
+        if(!form.competences.$form.validity.competencesNotEmpty) alertString+="Компетенции не выбраны.\n"
+        if(!form.competences.$form.validity.weightDeaposoned) alertString+="Сумма весов компетенций больше ста.\n"
+        if(alertString!="") alert("Ошибка Формы.\n"+alertString)
+    }
     render() {
         
         if(this.state.AddedCompetenceList.length!==0)
@@ -72,7 +77,7 @@ class Create_Competence_Profile extends Component {
         else
         var addedHeader=<div/>
         const form=(
-            <Form className="col-12" model="myForms.competence_profile" validateOn="submit" validators={{competences: { competencesNotEmpty,weightDeaposoned }}} onSubmit={(values) => this.handleSubmit(values)}>
+            <Form className="col-12" model="myForms.competence_profile" validateOn="submit" onSubmitFailed={(userForm) => this.handleFailedSubmit(userForm)} validators={{competences: { competencesNotEmpty,weightDeaposoned }}} onSubmit={(values) => this.handleSubmit(values)}>
                 <Control.text className="col-5 mb-2" validators={{required}} model=".name" name="name"  placeholder="Название профиля" />
                 <Errors
                     className="text-danger col-6"

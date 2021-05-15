@@ -11,10 +11,10 @@ import { Loading } from './LoadingComponent';
                     {profile.competences.map((comp)=>{
                         return(
                             <ListGroupItem >
-                                <div className="row">
+                                <div className="row text-secondary">
                                     {"Название компетенции: "+comp.comp_id.name}
                                 </div>
-                                <div className="row">
+                                <div className="row text-info ml-1">
                                     {"Выбранное значение: "+comp.comp_id.indicators[comp.chosenValue].name + " ("+comp.chosenValue+ ")"}
                                 </div>
                             </ListGroupItem>
@@ -51,9 +51,8 @@ import { Loading } from './LoadingComponent';
                     })
                 })
             }
-            
             this.state ={
-                max_score:max_score*(this.props.filled_assessment_profiles.length+1),
+                max_score:(max_score*(this.props.filled_assessment_profiles.length)).toFixed(2),
                 result:((result===0) ? result : result.toFixed(2))
             }
         }
@@ -81,13 +80,13 @@ import { Loading } from './LoadingComponent';
             {
                 const main=(this.props.assessment_profiles.length===0) ? (
                 <div >
-                    <div className="row h5">
+                    <div className="row h5 text-success">
                         Статус оценки: Завершена
                     </div>
                     <div className="row h6">
                         Результат Оценки:
                     </div>
-                    
+                    <div className="ml-3 text-info">
                         {this.props.filled_assessment_profiles.map((profile)=>{
                             var cur_score=0;
                             profile.competences.forEach((comp)=>{
@@ -111,18 +110,23 @@ import { Loading } from './LoadingComponent';
                         <div className="row">
                             {"Максимальная оценка: "+this.state.max_score}
                         </div>
+
+                    </div>
+                    <div className="row h6">
+                            {"В результате оценки Сотрудник соответствует профилю компетенции на "+((this.state.result/this.state.max_score)*100).toFixed()+"%"}
+                    </div>
                 </div>
                 )
                 :
                 (
-                <div className="row col-12 h5">
+                <div className="row col-12 h5 text-danger">
                     Статус оценки: В процессе
                     </div>
                 );
 
                 const filled=(this.props.filled_assessment_profiles.length!==0) ? (
                     <div className="d-inline-block col-6">
-                        <div className="row h5">
+                        <div className="row h5 text-success">
                     Завершенные анкеты
                     </div>
                     <div className="row">
@@ -139,7 +143,7 @@ import { Loading } from './LoadingComponent';
                 (<div/>)
                 const Unfilled=(this.props.assessment_profiles.length!==0) ? (
                     <div className="d-inline-block col-6">
-                        <div className="row h5">
+                        <div className="row h5 text-danger">
                     Незавершенные анкеты
                     </div>
                     <div className="row">

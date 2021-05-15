@@ -68,7 +68,7 @@ class Assisment_Fill extends Component {
     handleSubmit = (values) => {
         this.props.postFillAssessmentProfile(values);
         this.props.resetfilledAssessmentProfileForm();
-        this.setState({referrer: '/assessment_profile'});
+        this.setState({referrer: '/assessments'});
         
         
     }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './HeaderComponent';
+import UnAuthenticated from './UnAuthenticatedComponent';
 import CreateCompetence from './CreateCompetenceComponent';
 import CreateCompetenceProfile from './CreateCompetenceProfileComponent';
 import AssessmentStart from './AssessmentStartComponent';
@@ -95,18 +96,27 @@ class Main extends Component {
         />
       );
     }
-    /*
     const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route {...rest} render={(props) => (
         this.props.auth.isAuthenticated
           ? <Component {...props} />
           : <Redirect to={{
-              pathname: '/menu',
+              pathname: '/unauthenticated',
               state: { from: props.location }
             }} />
       )} />
     );
-    */
+    const AdminRoute = ({ component: Component, ...rest }) => (
+      <Route {...rest} render={(props) => (
+        this.props.auth.isAuthenticated
+        
+          ? (this.props.auth.isAdmin ? <Component {...props} /> : <Redirect to={{pathname: '/assessments',state: { from: props.location }}} />)
+          : <Redirect to={{
+              pathname: '/unauthenticated',
+              state: { from: props.location }
+            }} />
+      )} />
+    );
     return (
       <div>
         <Header auth={this.props.auth} 
@@ -117,14 +127,14 @@ class Main extends Component {
         <TransitionGroup>
           <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
             <Switch>
-              <Route exact path="/assessments" component={() => <AssessmentList assessments={this.props.assessments} />} />
-              <Route exact path="/assessment_profile" component={() => <AssessmentProfilesList assessment_profiles={this.props.assessment_profiles} />} />
-              <Route path="/assessment_profile/:assessmentProfileId" component={ProfileWithId} />
-              <Route path="/assessments/:assessmentId" component={AssessmentWithId} />
-              <Route exact path="/create_competence" component={() => <CreateCompetence resetCompetenceForm={this.props.resetCompetenceForm} postCompetence={this.props.postCompetence} changeForm={this.props.changeForm} />} />
-              <Route exact path="/create_competence_profile" component={() => <CreateCompetenceProfile  competences={this.props.competences} resetCompetenceProfileForm={this.props.resetCompetenceProfileForm} postCompetenceProfile={this.props.postCompetenceProfile} changeForm={this.props.changeForm} removeForm={this.props.removeForm} />} />
-              <Route exact path="/assessment_start" component={() => <AssessmentStart  competence_profiles={this.props.competence_profiles} users={this.props.users} postAssessment={this.props.postAssessment} resetAssessmentForm={this.props.resetAssessmentForm} changeAssessmentForm={this.props.changeForm} />} />
-
+              <Route exact path="/unauthenticated" component={() => <UnAuthenticated />} />
+              <PrivateRoute exact path="/assessments" component={() => <AssessmentList assessments={this.props.assessments} />} />
+              <PrivateRoute exact path="/assessment_profile" component={() => <AssessmentProfilesList assessment_profiles={this.props.assessment_profiles} />} />
+              <PrivateRoute path="/assessment_profile/:assessmentProfileId" component={ProfileWithId} />
+              <PrivateRoute path="/assessments/:assessmentId" component={AssessmentWithId} />
+              <AdminRoute exact path="/create_competence" component={() => <CreateCompetence resetCompetenceForm={this.props.resetCompetenceForm} postCompetence={this.props.postCompetence} changeForm={this.props.changeForm} />} />
+              <AdminRoute exact path="/create_competence_profile" component={() => <CreateCompetenceProfile  competences={this.props.competences} resetCompetenceProfileForm={this.props.resetCompetenceProfileForm} postCompetenceProfile={this.props.postCompetenceProfile} changeForm={this.props.changeForm} removeForm={this.props.removeForm} />} />
+              <AdminRoute exact path="/assessment_start" component={() => <AssessmentStart  competence_profiles={this.props.competence_profiles} users={this.props.users} postAssessment={this.props.postAssessment} resetAssessmentForm={this.props.resetAssessmentForm} changeAssessmentForm={this.props.changeForm} />} />
             </Switch>
           </CSSTransition>
         </TransitionGroup>

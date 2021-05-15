@@ -6,6 +6,7 @@ import * as ActionTypes from './ActionTypes';
 export const Auth = (state = {
         isLoading: false,
         isAuthenticated: localStorage.getItem('token') ? true : false,
+        isAdmin: localStorage.getItem('token') ? (localStorage.getItem('isAdmin')==='true') ? true : false : false,
         token: localStorage.getItem('token'),
         user: localStorage.getItem('creds') ? JSON.parse(localStorage.getItem('creds')) : null,
         errMess: null
@@ -15,12 +16,14 @@ export const Auth = (state = {
             return {...state,
                 isLoading: true,
                 isAuthenticated: false,
+                isAdmin: false,
                 user: action.creds
             };
         case ActionTypes.LOGIN_SUCCESS:
             return {...state,
                 isLoading: false,
                 isAuthenticated: true,
+                isAdmin: localStorage.getItem('token') ? (localStorage.getItem('isAdmin')==='true') ? true : false : false,
                 errMess: '',
                 token: action.token
             };
@@ -28,6 +31,7 @@ export const Auth = (state = {
             return {...state,
                 isLoading: false,
                 isAuthenticated: false,
+                isAdmin: false,
                 errMess: action.message
             };
         case ActionTypes.SIGNUP_REQUEST:
@@ -52,12 +56,14 @@ export const Auth = (state = {
         case ActionTypes.LOGOUT_REQUEST:
             return {...state,
                 isLoading: true,
-                isAuthenticated: true
+                isAuthenticated: true,
+                isAdmin: false,
             };
         case ActionTypes.LOGOUT_SUCCESS:
             return {...state,
                 isLoading: false,
                 isAuthenticated: false,
+                isAdmin: false,
                 token: '',
                 user: null
             };
