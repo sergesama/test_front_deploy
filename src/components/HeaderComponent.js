@@ -3,7 +3,15 @@ import { Navbar, Nav, NavbarToggler, Collapse, NavItem,
     Button, Modal, ModalHeader, ModalBody,
     Form, FormGroup, Input, Label } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+/*
 
+                                        <Button outline onClick={this.toggleModalSignup} className="ml-2"> Signup
+                                        {this.props.auth.isFetching ?
+                                            <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                            : null
+                                        }
+                                         </Button>
+*/
 class Header extends Component {
 
     constructor(props) {
@@ -112,6 +120,7 @@ class Header extends Component {
                                                 : null
                                             }
                                         </Button>
+										
                                     </div>
                                         :
                                         <div>

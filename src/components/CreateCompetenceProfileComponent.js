@@ -8,6 +8,7 @@ var weight;
 const weightDeaposoned = (competencesArr) => {
     weight=0;
     competencesArr.forEach((comp)=>{
+        console.log(parseInt(comp.weight))
         weight+=parseInt(comp.weight)
     })
     
@@ -29,11 +30,16 @@ class Create_Competence_Profile extends Component {
         this.state.AddedCompetenceList.forEach((comp)=>{
             if(comp.name.indexOf(competence.name)!==-1)flag = false;
         });
+        console.log("flag")
+        console.log(flag)
+        console.log(raw_number)
         if (flag) {
             this.setState({AddedCompetenceList:this.state.AddedCompetenceList.concat(competence)})
-            this.props.changeForm("myForms.competence_profile.competences["+raw_number+"].competence_id",competence._id)
-            this.props.changeForm("myForms.competence_profile.competences["+raw_number+"].weight",(100/(this.state.AddedCompetenceList.length+1)).toFixed())
+            console.log(this.state.AddedCompetenceList.length)
+            this.props.changeForm("myForms.competence_profile.competences["+this.state.AddedCompetenceList.length+"].competence_id",competence._id)
+            this.props.changeForm("myForms.competence_profile.competences["+this.state.AddedCompetenceList.length+"].weight",(100/(this.state.AddedCompetenceList.length+1)).toFixed())
             this.state.AddedCompetenceList.forEach((comp,index)=>{
+                this.props.changeForm("myForms.competence_profile.competences["+index+"].competence_id",comp._id)
                 this.props.changeForm("myForms.competence_profile.competences["+index+"].weight",(100/(this.state.AddedCompetenceList.length+1)).toFixed())
             });
             

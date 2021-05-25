@@ -8,8 +8,9 @@ import { Loading } from './LoadingComponent';
             <ListGroupItem>
                 <Link to={`/assessment_profile/${assessment_profiles._id}`} >
                         <CardTitle>{"Название оценки: " + assessment_profiles.assessment.name}</CardTitle>
-                        <CardTitle>{"Оцениваемый: " +assessment_profiles.evaluated.firstname + " " + assessment_profiles.evaluated.lastname +" (" + assessment_profiles.evaluated.username + ") "}</CardTitle>
+                        
                 </Link>
+                <CardTitle className="text-success">{"Оцениваемый: " +assessment_profiles.evaluated.firstname + " " + assessment_profiles.evaluated.lastname }</CardTitle>
             </ListGroupItem>
         );
     }

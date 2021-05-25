@@ -130,7 +130,7 @@ class AssessmentStart extends Component {
         if(this.props.users!==undefined)
             evaluated = this.props.users.users.map((user) => {
                 return(
-                    <ListGroupItem className={`h5 col-12 ${(this.state.evaluatedClicked.find((elem)=>{return elem.username===user.username}) !== undefined) && "list-bg-grey"}`}  onClick={this.handleEvaluatedClassChanged.bind(this, user)}>{user.firstname + " " + user.lastname + " ( " + user.username + " )"}</ListGroupItem>
+                    <ListGroupItem className={`h5 col-12 ${(this.state.evaluatedClicked.find((elem)=>{return elem.username===user.username}) !== undefined) && "list-bg-grey"}`}  onClick={this.handleEvaluatedClassChanged.bind(this, user)}>{user.firstname + " " + user.lastname}</ListGroupItem>
                 );
             })
         else
@@ -139,7 +139,7 @@ class AssessmentStart extends Component {
         if(this.props.users!==undefined)
             evaluators = this.props.users.users.map((user) => {
                 return(
-                    <ListGroupItem className={`h5 col-12 ${ (this.state.evaluatorsClicked.find((elem)=>{return elem===user._id}) !== undefined) && "list-bg-grey"}`}  onClick={this.handleEvaluatorsClassChanged.bind(this, user)}>{user.firstname + " " + user.lastname + " ( " + user.username + " )"}</ListGroupItem>
+                    <ListGroupItem className={`h5 col-12 ${ (this.state.evaluatorsClicked.find((elem)=>{return elem===user._id}) !== undefined) && "list-bg-grey"}`}  onClick={this.handleEvaluatorsClassChanged.bind(this, user)}>{user.firstname + " " + user.lastname }</ListGroupItem>
                 );
             })
         else
@@ -180,7 +180,7 @@ class AssessmentStart extends Component {
                                 (this.state.evaluatedClicked.map(user => {
                                     return(
                                     <ListGroupItem className="h5 col-12 py-3">
-                                        {user.firstname + " " + user.lastname + " ( " + user.username + " )"}                            
+                                        {user.firstname + " " + user.lastname }                            
                                     </ListGroupItem>
                                     )
                                 })) 
@@ -209,7 +209,7 @@ class AssessmentStart extends Component {
                                 var userprops = this.props.users.users.find(el => {return el._id ===user})
                                 return(
                                     <ListGroupItem className="h5 col-12">
-                                        {userprops.firstname + " " + userprops.lastname + " ( " + userprops.username + " )"}
+                                        {userprops.firstname + " " + userprops.lastname }
                                     </ListGroupItem>
                                 )
                             })) 

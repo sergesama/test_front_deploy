@@ -6,7 +6,7 @@ import { Loading } from './LoadingComponent';
         return(
             <ListGroupItem >
                 
-                <div className="h5">{"Оценивающий: " +profile.assessmentProfileId.evaluator.firstname + " " + profile.assessmentProfileId.evaluator.lastname +" (" + profile.assessmentProfileId.evaluator.username + ") "}</div>
+                <div className="h5">{"Оценивающий: " +profile.assessmentProfileId.evaluator.firstname + " " + profile.assessmentProfileId.evaluator.lastname }</div>
                 <ListGroup>
                     {profile.competences.map((comp)=>{
                         return(
@@ -29,7 +29,7 @@ import { Loading } from './LoadingComponent';
         return(
             <ListGroupItem >
                 
-                <div className="h5">{"Оценивающий: " +profile.evaluator.firstname + " " + profile.evaluator.lastname +" (" + profile.evaluator.username + ") "}</div>
+                <div className="h5">{"Оценивающий: " +profile.evaluator.firstname + " " + profile.evaluator.lastname }</div>
 
             </ListGroupItem>
         );
@@ -97,7 +97,7 @@ import { Loading } from './LoadingComponent';
                                     <div >
                                         {
                                         "Оценивающий: "
-                                         + profile.assessmentProfileId.evaluator.firstname + " " + profile.assessmentProfileId.evaluator.lastname +" (" + profile.assessmentProfileId.evaluator.username + ") поставил оценку "
+                                         + profile.assessmentProfileId.evaluator.firstname + " " + profile.assessmentProfileId.evaluator.lastname + " поставил оценку "
                                          + ((cur_score===0) ? cur_score : cur_score.toFixed(2))
                                          }
                                          </div>
